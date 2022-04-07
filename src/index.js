@@ -20,7 +20,12 @@ class Board extends React.Component {
     }
 
     handleClick(i){
-        const squares = this.state.squares.slice(); // without slice() work the same way
+        const squares = this.state.squares.slice(); // slice() for make a copy instead of a link
+
+        if (calculateWinner(squares) || squares[i]){ //squares[i] work without it
+            return ;
+        }
+
         squares[i] = this.state.xIsNext ? "X" : "0";
         this.setState({
             squares: squares,
