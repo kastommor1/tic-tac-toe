@@ -11,21 +11,6 @@ function Square(props)  {
 }
 
 class Board extends React.Component {
-
-    handleClick(i){
-        const squares = this.state.squares.slice(); // slice() for make a copy instead of a link
-
-        if (calculateWinner(squares) || squares[i]){ //squares[i] work without it
-            return ;
-        }
-
-        squares[i] = this.state.xIsNext ? "X" : "0";
-        this.setState({
-            squares: squares,
-            xIsNext: !this.state.xIsNext});
-    }
-
-
     renderSquare(i) {
         return <Square
             value={this.props.squares[i]}
@@ -64,6 +49,24 @@ class Game extends React.Component {
             ],
             xIsNext: true,
         }
+    }
+
+    handleClick(i){
+        const history = this.state.history;
+        const current = history[history.length-1];
+
+        const squares = current.squares.slice(); // slice() for make a copy instead of a link
+
+        if (calculateWinner(squares) || squares[i]){ //squares[i] work without it
+            return ;
+        }
+
+        squares[i] = this.state.xIsNext ? "X" : "0";
+        this.setState({
+            history: history.concat([{
+                squares: squares
+            }]),
+            xIsNext: !this.state.xIsNext});
     }
 
     render() {
