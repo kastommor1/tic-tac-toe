@@ -57,7 +57,7 @@ class Game extends React.Component {
 
         const squares = current.squares.slice(); // slice() for make a copy instead of a link
 
-        if (calculateWinner(squares) || squares[i]){ //squares[i] work without it
+        if (calculateWinner(squares) || squares[i]){ //squares[i] for skip squares pressed before
             return ;
         }
 
@@ -66,12 +66,22 @@ class Game extends React.Component {
             history: history.concat([{
                 squares: squares
             }]),
-            xIsNext: !this.state.xIsNext});
+            stepNumber: 0,
+            xIsNext: !this.state.xIsNext
+        });
     }
 
     jumpTo(move){
-        console.log(move);
+
+        // const history = this.state.history.slice(-1*move-1);
+        // const xIsNext = !!(move%2);
+        //
+        // this.setState({
+        //     history: history,
+        //     xIsNext: xIsNext,}
+        //     );
     }
+
 
 
 
@@ -86,7 +96,9 @@ class Game extends React.Component {
                 'Go to start';
 
             return (
-                <li><button onClick={()=>this.jumpTo(move)}>{desc}</button></li>
+                <li kay={move}>
+                    <button onClick={()=>this.jumpTo(move)}>{desc}</button>
+                </li>
             )
         });
 
